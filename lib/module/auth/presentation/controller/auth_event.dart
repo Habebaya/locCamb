@@ -12,4 +12,11 @@ class RegisterEvent extends AuthEvent {
 
   RegisterEvent(this.email,this.password);
 }
+class LoginEvent extends AuthEvent {
+  final String email;
+  final String password;
+
+
+  LoginEvent(this.email,this.password);
+}
 

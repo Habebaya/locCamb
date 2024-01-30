@@ -18,15 +18,14 @@ class AuthRepository extends BaseAuthRepository {
     }
   }
 
-// @override
-// Future<Either<Failure, User>> loginWithEmailAndPassword(
-//     String email, String password) async {
-//   try {
-//     final result =
-//     await authDataSource.loginWithEmailAndPassword(email, password);
-//     return Right(result);
-//   } on Failure catch (e) {
-//     return Left(Failure(e.value));
-//   }
-// }
+  @override
+  Future<Either<String, String>> loginWithEmail({email, password}) async {
+    try {
+      final result =
+          await authDataSource.loginWithEmailAndPassword(email, password);
+      return Right(result);
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
 }

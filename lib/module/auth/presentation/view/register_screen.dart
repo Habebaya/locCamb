@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:loccamb/module/auth/presentation/view/register_screen.dart';
+import 'package:loccamb/module/auth/presentation/controller/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constant/request_state.dart';
 import '../../../home/presentation/screen/home_screen.dart';
-import '../controller/auth_bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+class _RegisterScreenState extends State<RegisterScreen> {
+  GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   bool _obscureText = true;
@@ -28,13 +27,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset('assets/image/login.jpg'),
+              Image.asset('assets/image/register.jpg'),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 width: MediaQuery.of(context).size.width,
@@ -70,9 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Enter Email Address';
-                    } else {
-                      return null;
+                      return 'the email doesn’t look valid. Please, check again';
                     }
                     return null;
                   },
@@ -107,8 +104,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       //<-- SEE HERE
                       borderSide: BorderSide(width: 2, color: Color(0xFFFFA400)),
                     ),
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 18.0, horizontal: 4.0),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18.0, horizontal: 4.0),
                     enabledBorder: const UnderlineInputBorder(
                       //<-- SEE HERE
                       borderSide: BorderSide(width: 2, color: Color(0xFFDDE2E5)),
@@ -131,16 +128,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 25,),
+              const SizedBox(
+                height: 25,
+              ),
               BlocListener<AuthBloc, AuthState>(
                 listener: (context, state) {
-                  if (state.loginState == RequestState.loading) {
+                  if (state.registerState == RequestState.loading) {
                     const Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (state.loginState == RequestState.loaded) {
-                    if (state.loginStatus == "") {
-                      print(state.loginStatus);
+                  } else if (state.registerState == RequestState.loaded) {
+                    if (state.registerStatus == '') {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -150,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                             content: Text(
-                              state.loginStatus,
+                            state.registerStatus,
                             )),
                       );
                     }
@@ -160,13 +158,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () async{
-                       // await FirebaseAuth.instance.signOut();
-
-                      // if (loginFormKey.currentState!.validate()) {
-                      BlocProvider.of<AuthBloc>(context).add(LoginEvent(
-                          email.text.trim(), password.text.trim()));
-                        // }
+                    onPressed: () {
+                      // if (registerFormKey.currentState!.validate()) {
+                        BlocProvider.of<AuthBloc>(context).add(RegisterEvent(
+                            email.text.trim(), password.text.trim()));
+                   //   }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF1c374d),
@@ -175,52 +171,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     child: const Text(
-                      "Login",
+                      "Register",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
+                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.w700),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 15,),
-              Row(
-                mainAxisAlignment:
-                MainAxisAlignment.center,
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const Text(
-                      "Don't have an account  ",
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 14,
-                          color: Color(0XFF959B9F))),
-                  InkWell(
-                    onTap: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                          builder: (context) => const RegisterScreen()));
-                    },
-                    child: RichText(
-                      text: const TextSpan(children: [
-                        TextSpan(
-                            text:"Sign up",
-                            style: TextStyle(
-                                color: Color(0XFF959B9F),
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Poppins',
-                                decoration: TextDecoration
-                                    .underline,
-                                fontSize: 12),
-
-
-                           ),
-                      ]),
-                    ),
-                  ),
-                ],
+              const SizedBox(
+                height: 15,
               ),
 
             ],

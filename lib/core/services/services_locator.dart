@@ -1,94 +1,42 @@
 import 'package:get_it/get_it.dart';
+import 'package:loccamb/module/auth/domian/use_case/login_usecase.dart';
 import 'package:loccamb/module/auth/domian/use_case/register_usecase.dart';
+import 'package:loccamb/module/home/data/data_source/home_remote_data_source.dart';
+import 'package:loccamb/module/home/data/repository/home_repository.dart';
+import 'package:loccamb/module/home/domian/repository/base_home_repository.dart';
+import 'package:loccamb/module/home/domian/use_case/getusers_usecase.dart';
+import 'package:loccamb/module/home/presentation/controller/home_bloc.dart';
 
 import '../../module/auth/data/data_source/auth_remote_data_source.dart';
 import '../../module/auth/data/repository/auth_repository.dart';
 import '../../module/auth/domian/repository/base_auth_repository.dart';
 import '../../module/auth/presentation/controller/auth_bloc.dart';
-
+import '../network/network_service.dart';
+import 'package:dio/dio.dart';
 final sl = GetIt.instance;
 
 class ServicesLocator {
   init() {
     ///bloc
-    // sl.registerFactory(() => PopularNewsBloc(sl(), sl()));
 
-    // sl.registerFactory(() => SignalBloc(sl()));
-    // sl.registerFactory(() => GlobalNewsBloc(sl(), sl()));
-    // sl.registerFactory(() => MarketPriceBloc(sl(), sl(), sl()));
-    // sl.registerFactory(() => LearningBloc(sl(),sl()));
-    // sl.registerFactory(() => LoginBloc(sl()));
-    // sl.registerFactory(() => ServiceBloc(sl()));
-    //
-    // sl.registerFactory(() => WishlistBloc(sl(), sl(), sl(), sl(),sl()));
-    //
-    // sl.registerFactory(() => RegisterBloc());
-    //
-    sl.registerLazySingleton<AuthBloc>(() => AuthBloc(sl()));
-    // sl.registerLazySingleton<SearchBloc>(() => SearchBloc(sl()));
-    //
-    //
-    // /// useCase
-    // sl.registerLazySingleton(() => GetGlobalNewsCategoryUseCase(sl()));
-    // sl.registerLazySingleton(() => GetPopularNewsUseCase(sl()));
-    // sl.registerLazySingleton(() => GetSignalByDateUseCase(sl()));
-    // sl.registerLazySingleton(() => GetGlobalNewsUseCase(sl()));
-    // sl.registerLazySingleton(() => GetNewsDetailsUseCase(sl()));
-    // sl.registerLazySingleton(() => GetTrendyPriceUseCase(sl()));
-    // sl.registerLazySingleton(() => GetLearningUseCase(sl()));
+    sl.registerFactory(()  => AuthBloc(sl(),sl()));
+    sl.registerFactory(() => HomeBloc(sl()));
+
+    /// useCase
+
     sl.registerLazySingleton(() => RegisterUseCase(sl()));
-    // sl.registerLazySingleton(() => GetMarketWishlistUseCase(sl()));
-    // sl.registerLazySingleton(() => GetPostWishlistUseCase(sl()));
-    // sl.registerLazySingleton(() => GetLearningWishlistUseCase(sl()));
-    // sl.registerLazySingleton(() => AddToWishlistUseCase(sl()));
-    // sl.registerLazySingleton(() => GetServicesUseCase(sl()));
-    // sl.registerLazySingleton(() => GetMarketPriceCategoryUseCase(sl()));
-    // sl.registerLazySingleton(() => GetMarketPriceUseCase(sl()));
-    // sl.registerLazySingleton(() => DeleteFromWishlistUseCase(sl()));
-    // sl.registerLazySingleton(() => SearchInMarketPriceUseCase(sl()));
-    // sl.registerLazySingleton(() => GetLearningCategoryUseCase(sl()));
-    //
-    //
-    //
-    //
-    // ///repo
-    // sl.registerLazySingleton<BaseSignalRepository>(
-    //     () => SignalRepository(sl()));
-    // sl.registerLazySingleton<BaseGlobalNewsRepository>(
-    //     () => GlobalNewsRepository(sl()));
-    // sl.registerLazySingleton<BasePopularNewsRepository>(
-    //     () => PopularNewsRepository(sl()));
-    // sl.registerLazySingleton<BaseMarketPriceRepository>(
-    //     () => MarketPriceRepository(sl()));
-    // sl.registerLazySingleton<BaseLearningRepository>(
-    //     () => LearningRepository(sl()));
-    // sl.registerLazySingleton<BaseWishlistRepository>(
-    //     () => WishlistRepository(sl()));
-    //
+    sl.registerLazySingleton(() => LoginUseCase(sl()));
+    sl.registerLazySingleton(() => GetUserUseCase(sl()));
+
     sl.registerLazySingleton<BaseAuthRepository>(() => AuthRepository(sl()));
-    // sl.registerLazySingleton<BaseServiceRepository>(
-    //     () => ServiceRepository(sl()));
-    //
-    // ///DataSource
-    // sl.registerLazySingleton<BaseSignalRemoteDataSource>(
-    //     () => SignalRemoteDataSource());
-    // sl.registerLazySingleton<BaseGlobalNewsRemoteDataSource>(
-    //     () => GlobalNewsRemoteDataSource());
-    // sl.registerLazySingleton<BasePopularNewsRemoteDataSource>(
-    //     () => PopularNewsRemoteDataSource());
-    // sl.registerLazySingleton<BaseMarketPriceRemoteDataSource>(
-    //     () => MarketPriceRemoteDataSource());
-    // sl.registerLazySingleton<BaseLearningRemoteDataSource>(
-    //     () => LearningRemoteDataSource());
+    sl.registerLazySingleton<BaseHomeRepository>(() => HomeRepository(sl()));
+
+
     sl.registerLazySingleton<AuthDataSource>(() => AuthRemoteDataSource());
-    // sl.registerLazySingleton<BaseWishlistRemoteDataSource>(
-    //     () => WishlistRemoteDataSource());
-    // sl.registerLazySingleton<BaseServiceRemoteDataSource>(
-    //     () => ServiceRemoteDataSource());
+    sl.registerLazySingleton<HomeRemoteDataSource>(() => HomeRemoteDataSource(sl()));
+
     //
     // //utils
-    // sl.registerLazySingleton<ApiHelper>(() => ApiHelper());
-    // sl.registerLazySingleton<AuthManager>(() => AuthManager());
-    // sl.registerLazySingleton<AppRouter>(() => AppRouter());
+     sl.registerFactory(() =>ApiHelper(Dio()));
   }
 }
