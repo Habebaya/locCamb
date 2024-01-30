@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "537876308516",
+    "project_id": "loccamb-d1126",
+    "storage_bucket": "loccamb-d1126.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537876308516:android:74cb4cba963c05055b6eb1",
+        "android_client_info": {
+          "package_name": "com.example.loccamb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNDAXVOrR0ZKhqD3WkP6zod9_V9qb34vM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
