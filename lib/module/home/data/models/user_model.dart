@@ -1,4 +1,5 @@
 import 'package:loccamb/module/home/data/models/address_model.dart';
+import 'package:loccamb/module/home/data/models/geo_model.dart';
 
 import '../../domian/entities/user.dart';
 
@@ -10,11 +11,12 @@ class UserModel extends User {
       required super.email,
       required super.addressModel});
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-      id: json['id'],
-      name: json['name'],
-      userName: json['username'],
-      email: json['email'],
-      addressModel: AddressModel.fromJson(json['address']),
+    id: json['id'],
+    name: json['name'],
+    userName: json['username'],
+    email: json['email'],
+    addressModel: AddressModel.fromJson(json['address']),
 
-    );
+
+  );
 }

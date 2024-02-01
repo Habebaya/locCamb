@@ -54,6 +54,8 @@ dev_dependencies:
   dio: ^5.3.0
   dartz: ^0.10.1
   get_it: ^7.6.0
+  shared_preferences: ^2.2.2
+  map_launcher: ^3.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loccamb/module/auth/presentation/view/register_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/constant/request_state.dart';
 import '../../../home/presentation/screen/home_screen.dart';
 import '../controller/auth_bloc.dart';
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 25,),
               BlocListener<AuthBloc, AuthState>(
-                listener: (context, state) {
+                listener: (context, state)async  {
                   if (state.loginState == RequestState.loading) {
                     const Center(
                       child: CircularProgressIndicator(),
@@ -145,7 +145,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const HomeScreen()),
+
                       );
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+                      Future<bool> loggedIn = prefs.setBool('loggedIn', true);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

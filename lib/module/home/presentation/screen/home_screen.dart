@@ -32,15 +32,14 @@ class HomeScreen extends StatelessWidget {
                   );
                 case RequestState.loaded:
                   if (state.users!.isNotEmpty) {
-                    return ListView.separated(
+                    return ListView.builder(
                       scrollDirection: Axis.vertical,
 
                       itemBuilder: (context, index) {
                         return  UserTile( user: state.users[index],);
                       },
                       itemCount: state.users.length,
-                      separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(height: 4),
+
                     );
                   } else {
                     return const Text("empty");

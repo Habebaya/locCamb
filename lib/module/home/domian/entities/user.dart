@@ -1,6 +1,8 @@
 import 'package:loccamb/module/home/data/models/address_model.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../data/models/geo_model.dart';
+
 class User extends Equatable {
   final int id;
   String name;
@@ -8,12 +10,13 @@ class User extends Equatable {
   String email;
   AddressModel addressModel;
 
-  User(
-      {required this.id,
-      required this.name,
-      required this.userName,
-      required this.email,
-      required this.addressModel});
+  User({
+    required this.id,
+    required this.name,
+    required this.userName,
+    required this.email,
+    required this.addressModel,
+  });
 
   @override
   List<Object> get props => [id, name, userName, email, addressModel];
